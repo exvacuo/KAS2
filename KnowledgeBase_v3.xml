@@ -115,7 +115,7 @@
 	</question>
 
 	<question>
-		<description>Did the person suffer any damage or loss?</description>
+		<description>Did the recipient of the act or omission suffer any damage or loss?</description>
 		<option>
 			<description>Yes</description>
 			<then>
