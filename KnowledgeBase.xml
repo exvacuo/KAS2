@@ -1,0 +1,104 @@
+<?xml version="1.0"?>
+<knowledge>
+
+<goal name="must-repair-damage">    
+    <description> Did the person commit a tortious act that can be attributed to the person</description>
+    <answer value="yes"> Person commited a tortious act and must repair damage </answer>
+    <answer> The person did not commit a tortious act is or not attributable </answer>
+</goal>
+
+
+
+<!-- Main rule, if person commited a tortious act, damage occurred and 
+ is attributable then person must repair damage -->
+<rule> 
+    <description> Is there a tortious act, where damage occured performed by attributable person   </description>
+    <if>
+        <and>
+        <fact name="is-tortious">yes</fact>
+        <fact name="damage-occured">yes</fact>
+        <fact name="attributable">yes</fact>
+        </and>
+        
+    </if>
+    <then>
+        <fact name="must-repair-damage">yes</fact>
+    </then>
+</rule>
+
+
+<!-- Rule to check if a tortious act was performed-->
+<rule name="is-tortious"> 
+    <description> Was a tortious act performed? </description>
+    <if>
+        <fact name="is_someone_elses_right" value="true"/>
+    </if>
+    <then> 
+        <fact name="is-tortious" value="yes"> </fact>
+    </then>
+</rule>
+
+<!-- Rule to check if person is attributable-->
+<rule>
+    <description>Is person attributable? </description>
+    <if>
+       <fact name="person_of_age" value ="yes"/>
+    </if>
+    <then>
+        <fact name="attributable" value="yes"/>
+    </then>
+</rule>
+
+
+<!-- Question to check if someone elses right was violated-->
+<question name="is_someone_elses_right">
+    <description>Did the person violate someone else's right?</description>
+    <option>
+        <description>yes</description>
+        <then>
+            <fact name="is_someone_elses_right" value="true"/>
+        </then>
+    </option>
+    <option>
+        <description>no</description>
+        <then>
+            <fact name="is_someone_elses_right" value="false"/>
+        </then>
+    </option>
+</question>
+
+
+<!-- Question to check if damage occured in the violation-->
+<question name="damage-occured">
+    <description>Did damage occur in the violation of someone else's right?</description>
+    <option>
+        <description>yes</description>
+        <then>
+            <fact name="damage-occured" value="true"/>
+        </then>
+    </option>
+    <option>
+        <description>no</description>
+        <then>
+            <fact name="damage-occured" value="false"/>
+        </then>
+    </option>
+</question>
+
+<question name="person_of_age">
+    <description> Is person 14 years or older</description>
+    <option>
+    <description>yes</description>    
+    <then>
+        <fact name="person_of_age" value="yes"/>
+    </then>
+    </option>
+    <option>
+        <description>no</description>
+        <then>
+            <fact name="person_of_age" value="no"/>
+        </then>
+    </option>
+</question>
+
+</knowledge>

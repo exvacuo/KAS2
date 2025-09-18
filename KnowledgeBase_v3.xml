@@ -1,0 +1,229 @@
+<?xml version="1.0"?>
+<knowledge>
+	<title>Tortious Assessment</title>
+	<description>This knowledge base determines whether a person must repair damage from a tortious act under Dutch Civil Code.</description>
+
+	<goal name="must-repair-damage">
+		<description>Does the person have the obligation to repair damage from a tortious act?</description>
+		<answer value="yes"><![CDATA[The person <em>must</em> repair the damage.]]></answer>
+		<answer>The person has no obligation to repair damage.</answer>
+	</goal>
+
+	<rule>
+		<description>If there is a tortious act, the person is accountable, the violated standard intends protection, and damage occurred as a result, then the person must repair the damage.</description>
+		<if>
+			<and>
+				<fact name="is-tortious-act">yes</fact>
+				<fact name="person-accountable">yes</fact>
+				<fact name="protection-intended">yes</fact>
+				<fact name="damage-suffered">yes</fact>
+				<fact name="damage-caused-by-act">yes</fact>
+			</and>
+		</if>
+		<then>
+			<fact name="must-repair-damage">yes</fact>
+		</then>
+	</rule>
+
+	<rule>
+		<description>Tortious act: Someone else's right was violated OR there was an act/omission in violation of a legal or social duty AND no justification.</description>
+		<if>
+			<and>
+				<or>
+					<fact name="right-violated">yes</fact>
+					<fact name="legal-duty-violated">yes</fact>
+					<fact name="social-duty-violated">yes</fact>
+				</or>
+				<fact name="justified">no</fact>
+			</and>
+		</if>
+		<then>
+			<fact name="is-tortious-act">yes</fact>
+		</then>
+	</rule>
+
+	<rule>
+		<description>If the person is 14 or older (6:164) and the damage results from their fault or accountable cause (6:162(3)), then the person is accountable.</description>
+		<if>
+			<and>
+				<fact name="older-than-14">yes</fact>
+				<fact name="fault-or-accountable-cause">yes</fact>
+			</and>
+		</if>
+		<then>
+			<fact name="person-accountable">yes</fact>
+		</then>
+	</rule>
+
+	<rule>
+		<description>If the person is younger than 14, the behavior cannot be attributed to them as a tortious act.</description>
+		<if>
+			<fact name="older-than-14">no</fact>
+		</if>
+		<then>
+			<fact name="person-accountable">no</fact>
+		</then>
+	</rule>
+
+
+	<question>
+		<description>Did the person violate someone else's right (entitlement)?</description>
+		<option>
+			<description>Yes</description>
+			<then>
+				<fact name="right-violated">yes</fact>
+			</then>
+		</option>
+		<option>
+			<description>No</description>
+			<then>
+				<fact name="right-violated">no</fact>
+			</then>
+		</option>
+	</question>
+
+	<question>
+		<description>Was there an act or omission in violation of a legal duty?</description>
+		<option>
+			<description>Yes</description>
+			<then>
+				<fact name="legal-duty-violated">yes</fact>
+			</then>
+		</option>
+		<option>
+			<description>No</description>
+			<then>
+				<fact name="legal-duty-violated">no</fact>
+			</then>
+		</option>
+	</question>
+
+	<question>
+		<description>Was there an act or omission in violation of proper social conduct?</description>
+		<option>
+			<description>Yes</description>
+			<then>
+				<fact name="social-duty-violated">yes</fact>
+			</then>
+		</option>
+		<option>
+			<description>No</description>
+			<then>
+				<fact name="social-duty-violated">no</fact>
+			</then>
+		</option>
+	</question>
+
+	<question>
+		<description>Did the person suffer any damage or loss?</description>
+		<option>
+			<description>Yes</description>
+			<then>
+				<fact name="damage-suffered">yes</fact>
+			</then>
+		</option>
+		<option>
+			<description>No</description>
+			<then>
+				<fact name="damage-suffered">no</fact>
+			</then>
+		</option>
+	</question>
+
+	<question>
+		<description>Was the damage a result of this act or omission?</description>
+		<option>
+			<description>Yes</description>
+			<then>
+				<fact name="damage-caused-by-act">yes</fact>
+			</then>
+		</option>
+		<option>
+			<description>No</description>
+			<then>
+				<fact name="damage-caused-by-act">no</fact>
+			</then>
+		</option>
+	</question>
+
+	<question>
+		<description>Is the person 14 years of age or older?</description>
+		<option>
+			<description>Yes</description>
+			<then>
+				<fact name="older-than-14">yes</fact>
+			</then>
+		</option>
+		<option>
+			<description>No</description>
+			<then>
+				<fact name="older-than-14">no</fact>
+			</then>
+		</option>
+	</question>
+
+	<question>
+		<description>Was there justification for this behavior?</description>
+		<option>
+			<description>Yes</description>
+			<then>
+				<fact name="justified">yes</fact>
+			</then>
+		</option>
+		<option>
+			<description>No</description>
+			<then>
+				<fact name="justified">no</fact>
+			</then>
+		</option>
+	</question>
+
+	<question>
+		<description>Does the tortious act result from the person's fault or from a cause for which they are accountable?</description>
+		<option>
+			<description>Yes</description>
+			<then>
+				<fact name="fault-or-accountable-cause">yes</fact>
+			</then>
+		</option>
+		<option>
+			<description>No</description>
+			<then>
+				<fact name="fault-or-accountable-cause">no</fact>
+			</then>
+		</option>
+	</question>
+
+	<question>
+		<description>Does the violated standard of behavior intend to offer protection against the damage suffered?</description>
+		<option>
+			<description>Yes</description>
+			<then>
+				<fact name="protection-intended">yes</fact>
+			</then>
+		</option>
+		<option>
+			<description>No</description>
+			<then>
+				<fact name="protection-intended">no</fact>
+			</then>
+		</option>
+	</question>
+
+	<question>
+		<description>Is the person under the influence of a mental or physical disability?</description>
+		<option>
+			<description>Yes</description>
+			<then>
+				<fact name="mental-physical-disability">yes</fact>
+			</then>
+		</option>
+		<option>
+			<description>No</description>
+			<then>
+				<fact name="mental-physical-disability">no</fact>
+			</then>
+		</option>
+	</question>
+
+</knowledge>
